@@ -141,10 +141,13 @@ function createComponent({title, date, firstParagraph, secondParagraph, thirdPar
 
   const buttonNode = document.createElement("span");
   buttonNode.classList.add("expandButton");
-  buttonNode.textContent = "Expand";
+  buttonNode.textContent = "Click to Expand";
   node.appendChild(buttonNode);
 
-  buttonNode.addEventListener("click", () => node.classList.toggle("article-open"));
+  buttonNode.addEventListener("click", () => {
+    node.classList.toggle("article-open");
+    buttonNode.textContent = node.classList.contains("article-open") ? "Click to Close" : "Click to Expand";
+  });
 
   return node;
 }
