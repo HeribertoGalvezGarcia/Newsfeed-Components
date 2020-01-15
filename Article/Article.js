@@ -128,6 +128,13 @@ function createComponent({title, date, firstParagraph, secondParagraph, thirdPar
   titleNode.textContent = title;
   node.appendChild(titleNode);
 
+  const closeNode = document.createElement("span");
+  closeNode.textContent = "X";
+  closeNode.classList.add("close");
+  node.appendChild(closeNode);
+
+  closeNode.addEventListener("click", () => node.style.display = "none");
+
   const dateNode = document.createElement("p");
   dateNode.classList.add("date");
   dateNode.textContent = date;
