@@ -85,6 +85,13 @@ const data = [
     thirdParagraph: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
           Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
           Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
+  },
+  {
+    title: 'Title',
+    date: 'Jan 15th, 2019',
+    firstParagraph: 'First',
+    secondParagraph: 'Second',
+    thirdParagraph: 'Third'
   }
 ];
 
@@ -112,3 +119,58 @@ const data = [
   Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new article.
 
 */
+
+function createComponent({title, date, firstParagraph, secondParagraph, thirdParagraph}) {
+  const node = document.createElement("div");
+  node.classList.add("article");
+
+  const titleNode = document.createElement("h2");
+  titleNode.textContent = title;
+  node.appendChild(titleNode);
+
+  const closeNode = document.createElement("span");
+  closeNode.textContent = "X";
+  closeNode.classList.add("close");
+  node.appendChild(closeNode);
+
+  closeNode.addEventListener("click", () => node.style.display = "none");
+
+  const dateNode = document.createElement("p");
+  dateNode.classList.add("date");
+  dateNode.textContent = date;
+  node.appendChild(dateNode);
+
+  for (const text of [firstParagraph, secondParagraph, thirdParagraph]) {
+    const textNode = document.createElement("p");
+    textNode.textContent = text;
+    node.appendChild(textNode);
+  }
+
+  const buttonNode = document.createElement("span");
+  buttonNode.classList.add("expandButton");
+  buttonNode.textContent = "Click to Expand";
+  node.appendChild(buttonNode);
+
+  buttonNode.addEventListener("click", () => {
+    node.classList.toggle("article-open");
+    buttonNode.textContent = node.classList.contains("article-open") ? "Click to Close" : "Click to Expand";
+  });
+
+  return node;
+}
+
+const articlesNode = document.querySelector(".articles");
+
+data.map(createArticle);
+
+function createArticle(data) {
+  const node = createComponent(data);
+  articlesNode.appendChild(node);
+}
+
+const form = document.querySelector("form");
+form.onsubmit = () => {
+  const formData = new FormData(form);
+  createArticle(Object.fromEntries(formData));
+  return false;
+};
