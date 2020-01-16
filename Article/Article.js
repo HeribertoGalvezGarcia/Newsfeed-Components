@@ -161,4 +161,16 @@ function createComponent({title, date, firstParagraph, secondParagraph, thirdPar
 
 const articlesNode = document.querySelector(".articles");
 
-for (const d of data) articlesNode.appendChild(createComponent(d));
+data.map(createArticle);
+
+function createArticle(data) {
+  const node = createComponent(data);
+  articlesNode.appendChild(node);
+}
+
+const form = document.querySelector("form");
+form.onsubmit = () => {
+  const formData = new FormData(form);
+  createArticle(Object.fromEntries(formData));
+  return false;
+};
